@@ -82,5 +82,3 @@ document.querySelector(".goBackButton").addEventListener("click", function() {
   // Redirecionar para a página anterior
   window.history.back();
 });
-
-  
