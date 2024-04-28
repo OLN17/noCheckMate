@@ -1,0 +1,93 @@
+/* Estilos gerais */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.container {
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+
+/* Estilos para o título da página */
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Estilos para os elementos de configuração */
+.configOption {
+  margin-bottom: 15px;
+}
+
+.configOption label {
+  display: block;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.configOption input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Estilos para o botão de salvar */
+.saveButton {
+  padding: 15px 30px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.saveButton:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para o botão de excluir configurações */
+.deleteButton {
+  padding: 15px 30px;
+  font-size: 18px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.deleteButton:hover {
+  background-color: #c82333;
+}
+
+/* Estilos para o botão de voltar */
+.goBackButton {
+  padding: 15px 30px;
+  font-size: 18px;
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.goBackButton:hover {
+  background-color: #5a6268;
+}
