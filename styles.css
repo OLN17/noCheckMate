@@ -17,7 +17,7 @@ body {
   }
   
   /* Estilos para o botão "Iniciar Leitura" */
-  #startButton {
+  #scanButton {
     padding: 15px 30px;
     font-size: 18px;
     background-color: #007bff;
@@ -28,7 +28,7 @@ body {
     transition: background-color 0.3s ease;
   }
   
-  #startButton:hover {
+  #scanButton:hover {
     background-color: #0056b3;
   }
   
@@ -82,4 +82,12 @@ body {
   .studentRA {
     font-size: 14px;
     color: #666;
+  }
+
+  #container {
+    text-align: center;
+  }
+  #logo {
+    width: 200px; /* Tamanho da imagem */
+    margin-bottom: 20px; /* Espaçamento abaixo da imagem */
   }
