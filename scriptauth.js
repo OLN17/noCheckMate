@@ -42,8 +42,8 @@ async function saveStudentInfo(studentName, studentID) {
         console.error("Erro ao salvar informações do aluno na planilha:", error);
     }
 }
-
-// Defina a variável reader antes de adicionar o evento de leitura NFC
+if ("NDEFReader" in window) {
+    // Defina a variável reader antes de adicionar o evento de leitura NFC
 const reader = new NDEFReader(); // Cria uma instância do leitor NFC
 
 // Event listener para capturar dados da NFC quando uma tag é detectada
@@ -62,4 +62,10 @@ reader.addEventListener("reading", async event => {
         // Salva as informações do aluno na planilha do Google Sheets
         await saveStudentInfo(studentName, studentID);
     }
-});
+        try {
+            await reader.scan();
+            console.log("NFC leitura iniciada!");
+        } catch (error) {
+            console.error("Erro ao iniciar a leitura NFC:", error);
+        }
+    });}
