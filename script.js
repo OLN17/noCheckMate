@@ -32,7 +32,7 @@ if ("NDEFReader" in window) {
       { name: "Maria", RA: "654321" }
     ];
  
-    displayStudentInfo(studentInfo);
+    
 });*/
   
   function displayStudentInfo(studentInfo) {
@@ -49,6 +49,17 @@ if ("NDEFReader" in window) {
       studentInfoDiv.appendChild(studentDiv);
     });
   }
+
+  reader.addEventListener("reading", event => {
+    studentInfo.innerHTML = ""; // Limpa o conteúdo anterior
+    for (const record of event.message.records) {
+      const textDecoder = new TextDecoder();
+      const recordData = textDecoder.decode(record.data);
+      studentInfo.innerHTML += `<p>Dados da Tag NFC: ${recordData}</p>`;
+    }
+  });
+
+  displayStudentInfo(studentInfo);
 
   document.getElementById("settingsButton").addEventListener("click", function() {
     // Redirecionar para a página de configurações
@@ -82,3 +93,5 @@ document.querySelector(".goBackButton").addEventListener("click", function() {
   // Redirecionar para a página anterior
   window.history.back();
 });
+
+  
