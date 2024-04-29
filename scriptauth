@@ -43,6 +43,9 @@ async function saveStudentInfo(studentName, studentID) {
     }
 }
 
+// Defina a variável reader antes de adicionar o evento de leitura NFC
+const reader = new NDEFReader(); // Cria uma instância do leitor NFC
+
 // Event listener para capturar dados da NFC quando uma tag é detectada
 reader.addEventListener("reading", async event => {
     studentInfo.innerHTML = ""; // Limpa o conteúdo anterior
