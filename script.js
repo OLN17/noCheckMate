@@ -26,67 +26,77 @@ document.addEventListener("DOMContentLoaded", function() {
               studentInfo.innerHTML += `<p>Dados da Tag NFC: ${recordData}</p>`;
               
               // Extrai as informações do aluno dos dados da tag NFC
-              const { studentName, studentRA } = extractStudentInfo(recordData);
+              const { studentName, studentID } = extractStudentInfo(recordData);
               
-              // Salva as informações do aluno na planilha do Google Sheets
-              await saveStudentInfo(studentName, studentRA);
+              if (studentName && studentID) {
+                  // Exibe as informações detalhadas do aluno na div studentInfo
+                  studentInfo.innerHTML += `
+                      <div class="studentCard">
+                          <div class="studentName">Nome: ${studentName}</div>
+                          <div class="studentID">ID: ${studentID}</div>
+                      </div>
+                  `;
+                  
+                  // Salva as informações do aluno na planilha do Google Sheets
+                  await saveStudentInfo(studentName, studentID);
+              } else {
+                  studentInfo.innerHTML += `<p>Erro ao extrair informações do aluno.</p>`;
+              }
           }
       });
   } else {
       console.log("A API Web NFC não é suportada neste navegador.");
   }
-// Função para extrair as informações do aluno dos dados da tag NFC
-function extractStudentInfo(recordData) {
-  // Suponha que os dados da tag NFC estejam no formato JSON
-  try {
-      const { name, RA } = JSON.parse(recordData);
-      return { studentName: name, studentRA: RA };
-  } catch (error) {
-      console.error("Erro ao extrair informações do aluno:", error);
-      return null; // Retorna null se houver um erro ao extrair as informações
-  }
-}
 
-// Função para salvar as informações do aluno na planilha do Google Sheets
-async function saveStudentInfo(studentName, studentRA) {
-  try {
-      const response = await fetch('URL_DA_SUA_API', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ name: studentName, RA: studentRA })
-      });
-
-      if (response.ok) {
-          console.log("Informações do aluno salvas com sucesso na planilha do Google Sheets.");
-      } else {
-          console.error("Erro ao salvar informações do aluno na planilha do Google Sheets:", response.statusText);
+  // Função para extrair as informações do aluno dos dados da tag NFC
+  function extractStudentInfo(recordData) {
+      // Suponha que os dados da tag NFC estejam no formato JSON
+      try {
+          const { name, id } = JSON.parse(recordData);
+          return { studentName: name, studentID: id };
+      } catch (error) {
+          console.error("Erro ao extrair informações do aluno:", error);
+          return null; // Retorna null se houver um erro ao extrair as informações
       }
-  } catch (error) {
-      console.error("Erro ao salvar informações do aluno na planilha do Google Sheets:", error);
   }
-}
 
-  // Função para exibir informações do estudante
-  function displayStudentInfo(studentInfo) {
-      const studentInfoDiv = document.getElementById("studentInfo");
-      studentInfoDiv.innerHTML = "";
+  // Função para salvar as informações do aluno na planilha do Google Sheets
+  async function saveStudentInfo(studentName, studentID) {
+      try {
+          // Substitua pelos detalhes de autenticação e autorização obtidos ao configurar a API do Google Sheets
+          const accessToken = "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";
+          const spreadsheetId = "1g4aOxy9DJOhzSGvjbbtA9sS318slt-rtMcwaI3gZDOk";
 
-      studentInfo.forEach(student => {
-          const studentDiv = document.createElement("div");
-          studentDiv.classList.add("studentCard");
-          studentDiv.innerHTML = `
-              <div class="studentName">${student.name}</div>
-              <div class="studentRA">RA: ${student.RA}</div>
-          `;
-          studentInfoDiv.appendChild(studentDiv);
-      });
+          // Objeto com os dados do aluno
+          const studentData = {
+              values: [
+                  [studentName, studentID]
+              ]
+          };
+
+          // Requisição POST para a API do Google Sheets para inserir os dados na planilha
+          const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/A1:append?valueInputOption=RAW&access_token=${accessToken}`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(studentData)
+          });
+
+          // Verifica se a inserção foi bem-sucedida
+          if (response.ok) {
+              console.log('Informações do aluno salvas com sucesso na planilha.');
+          } else {
+              console.error('Erro ao salvar informações do aluno na planilha:', response.statusText);
+          }
+      } catch (error) {
+          console.error("Erro ao salvar informações do aluno na planilha:", error);
+      }
   }
-});
 
-// Event listener para o botão de configurações
-document.getElementById("settingsButton").addEventListener("click", function() {
-  // Redirecionar para a página de configurações
-  window.location.href = "config.html";
+  // Event listener para o botão de configurações
+  document.getElementById("settingsButton").addEventListener("click", function() {
+      // Redirecionar para a página de configurações
+      window.location.href = "config.html";
+  });
 });
