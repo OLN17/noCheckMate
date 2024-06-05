@@ -1,62 +1,24 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leitura NFC MIFARE Classic 1K</title>
-  <style>
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .tagData {
-      margin-top: 20px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #f9f9f9;
-    }
-  </style>
+  <title>noCheckMate - Controle de Presença</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
   <div class="container">
-    <h1>Leitura NFC MIFARE Classic 1K</h1>
+    <div id="container">
+      <img id="logo" src="imagens/xadrez.png" alt="Logo">
+    </div>
+    <h1>noCheckMate</h1>
     <button id="scanButton">Iniciar Leitura</button>
-    <div id="tagData" class="tagData"></div>
+    <div id="studentInfo" class="studentCard">
+      <div class="studentName"></div>
+      <div class="studentRA"></div>
+    </div>
+    <button id="settingsButton">Configurações</button>
   </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/mfrc522-web-reader@1.0.1"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const scanButton = document.getElementById("scanButton");
-      const tagDataDiv = document.getElementById("tagData");
-      const reader = new MFRC522();
-
-      scanButton.addEventListener("click", async () => {
-        try {
-          await reader.start();
-          const tagData = await reader.scanCard();
-          console.log("Dados da Tag NFC:", tagData);
-          tagDataDiv.textContent = "Dados da Tag NFC: " + tagData;
-        } catch (error) {
-          console.error("Erro ao ler a tag NFC:", error);
-          tagDataDiv.textContent = "Erro ao ler a tag NFC: " + error.message;
-        }
-      });
-    });
-  </script>
+  <script src="/js/script.js"></script>
 </body>
 </html>
