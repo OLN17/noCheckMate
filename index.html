@@ -4,14 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Leitura NFC MIFARE Classic 1K</title>
-</head>
-<body>
-  <div class="container">
-    <h1>Leitura NFC MIFARE Classic 1K</h1>
-    <button id="scanButton">Iniciar Leitura</button>
-    <div id="tagData" class="tagData"></div>
-  </div>
-
   <style>
     .container {
       max-width: 600px;
@@ -38,23 +30,32 @@
       background-color: #f9f9f9;
     }
   </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Leitura NFC MIFARE Classic 1K</h1>
+    <button id="scanButton">Iniciar Leitura</button>
+    <div id="tagData" class="tagData"></div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/mfrc522-web-reader@1.0.1"></script>
   <script>
-    const scanButton = document.getElementById("scanButton");
-    const tagDataDiv = document.getElementById("tagData");
+    document.addEventListener("DOMContentLoaded", function() {
+      const scanButton = document.getElementById("scanButton");
+      const tagDataDiv = document.getElementById("tagData");
+      const reader = new MFRC522();
 
-    const reader = new MFRC522();
-
-    scanButton.addEventListener("click", async () => {
-      try {
-        const tagData = await reader.scanCard();
-        console.log("Dados da Tag NFC:", tagData);
-        tagDataDiv.textContent = "Dados da Tag NFC: " + tagData;
-      } catch (error) {
-        console.error("Erro ao ler a tag NFC:", error);
-        tagDataDiv.textContent = "Erro ao ler a tag NFC: " + error.message;
-      }
+      scanButton.addEventListener("click", async () => {
+        try {
+          await reader.start();
+          const tagData = await reader.scanCard();
+          console.log("Dados da Tag NFC:", tagData);
+          tagDataDiv.textContent = "Dados da Tag NFC: " + tagData;
+        } catch (error) {
+          console.error("Erro ao ler a tag NFC:", error);
+          tagDataDiv.textContent = "Erro ao ler a tag NFC: " + error.message;
+        }
+      });
     });
   </script>
 </body>
